@@ -3,7 +3,7 @@ pipeline {
 	stages {
 		stage("SCM") {
 			steps {
-				git 'https://github.com/skuldeep1994/java-docker-app.git'
+				git 'https://github.com/jitu9772/java-docker-app.git'
 				}
 			}
 
@@ -16,7 +16,7 @@ pipeline {
 		stage("Image") {
 			steps {
 				sh 'sudo docker build -t java-repo:$BUILD_TAG .'
-				sh 'sudo docker tag java-repo:$BUILD_TAG kuldeepbhardwaj/pipeline-java:$BUILD_TAG'
+				sh 'sudo docker tag java-repo:$BUILD_TAG jitu/pipeline-java:$BUILD_TAG'
 				}
 			}
 				
@@ -27,16 +27,15 @@ pipeline {
    				 // some block
 					
 			
-				sh 'sudo docker login -u kuldeepbhardwaj -p ${docker_hub_passwd_var}'
-				sh 'sudo docker push kuldeepbhardwaj/pipeline-java:$BUILD_TAG'
+				sh 'sudo docker login -u jeetusharma -p ${docker_hub_passwd_var}'
+				sh 'sudo docker push jitu/pipeline-java:$BUILD_TAG'
 				}
 			}	
 
 		}
 		stage("QAT Testing") {
 			steps {
-				sh 'sudo docker rm -f $(sudo docker ps -a -q)'
-				sh 'sudo docker run -dit -p 8001:8080  kuldeepbhardwaj/pipeline-java:$BUILD_TAG'
+				sh 'sudo docker run -dit -p 8001:8080  jitu/pipeline-java:$BUILD_TAG'
 				}
 			}
 		stage("testing website") {
